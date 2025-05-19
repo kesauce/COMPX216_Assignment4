@@ -48,14 +48,40 @@ def plot_model_and_dataset(model, X, y):
 def train(model, optimizer, inputs, labels, epochs):
     # Task 1
     # Train a model for a set number of epochs.
-    # Replace the line below with your code.
-    raise NotImplementedError
+
+    # Looping through the number of epochs
+    for i in range(epochs):
+        # Resetting model's gradients
+        optimizer.zero_grad()
+
+        # Compute models predictions
+        predictions = model(inputs)
+
+        # Computing the loss
+        loss = cross_entropy_loss(predictions, labels)
+
+        # Perform backpropagation
+        loss.backward()
+
+        # Perform gradient descent optimisation
+        optimizer.step()
+
 
 def test(model, inputs, labels):
     # Task 2
     # Test a model.
-    # Replace the line below with your code.
-    raise NotImplementedError
+
+    # Compute model's predictions
+    predictions = model(inputs)
+
+    # Computing the loss
+    loss = cross_entropy_loss(predictions, labels)
+
+    # Computing the accuracy
+    accuracy = classification_accuracy(predictions, labels)
+
+    # Return loss and accuracy
+    return loss.data, accuracy
 
 def train_and_test(model, training_data, test_data, iterations, epochs, report=False):
     training_X, training_y = training_data
