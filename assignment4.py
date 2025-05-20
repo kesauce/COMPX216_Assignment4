@@ -6,11 +6,15 @@ if 'matplotlib' not in {pkg.metadata['Name'] for pkg in importlib.metadata.distr
 import numpy as np
 import matplotlib.pyplot as plt
 
+np.random.seed(0)
+
+from copy import deepcopy 
+
 from datasets import make_circles
 from YAAE import Node
 from nn import NN, Optimizer
 
-os.environ['TCL_LIBRARY'] = r'C:/Program Files/Python313/tcl/tcl8.6'
+os.environ['TCL_LIBRARY'] = r'C:/Users/alexi/AppData/Local/Programs/Python/Python313/tcl/tcl8.6'
 
 def cross_entropy_loss(y_pred, labels):
     loss = labels * (y_pred.log()) + (1. - labels) * ((1. - y_pred).log())
@@ -84,6 +88,7 @@ def test(model, inputs, labels):
     return loss.data, accuracy
 
 def train_and_test(model, training_data, test_data, iterations, epochs, report=False):
+    model = deepcopy(model)
     training_X, training_y = training_data
     training_inputs = Node(training_X, requires_grad=False)
     training_labels = Node(training_y[:, np.newaxis], requires_grad=False)
@@ -93,8 +98,12 @@ def train_and_test(model, training_data, test_data, iterations, epochs, report=F
 
     # Task 3.1
     # Initial evaluation of loss and accuracy on the training and test sets.
-    # Replace the line below with your code.
-    raise NotImplementedError
+
+    #  Calculate the loss and accuracy of test data
+    test_loss, test_acc = test(model, test_inputs, test_labels)
+
+    # Calculate the loss and accuracy of the training data
+    training_loss, training_acc = test(model, training_inputs, training_labels)
 
     if report:
         print(f'Epoch 0: training-loss: {training_loss:.3f} | training-acc: {training_acc:.3f} | test-loss: {test_loss:.3f} | test-acc: {test_acc:.3f}')
@@ -107,16 +116,22 @@ def train_and_test(model, training_data, test_data, iterations, epochs, report=F
 
     # Task 3.2
     # Initialise the optimizer.
-    # Replace the line below with your code.
-    raise NotImplementedError
+    optimizer = Optimizer(model.parameters(), 0.1)
 
     for iter_i in range(iterations):
 
         # Task 3.3
         # Train the model.
         # Evaluate loss and accuracy on the training and test sets.
-        # Replace the line below with your code.
-        raise NotImplementedError
+
+        # Training the model
+        train(model, optimizer, training_inputs, training_labels, epochs)
+
+        #  Calculate the loss and accuracy of test data
+        test_loss, test_acc = test(model, test_inputs, test_labels)
+
+        # Calculate the loss and accuracy of the training data
+        training_loss, training_acc = test(model, training_inputs, training_labels)
 
         if report:
             print(f'Epoch {(iter_i + 1) * epochs}: training-loss: {training_loss:.3f} | training-acc: {training_acc:.3f} | test-loss: {test_loss:.3f} | test-acc: {test_acc:.3f}')
@@ -185,7 +200,6 @@ def test_training_set_sizes(sizes, model):
 
 if __name__ == '__main__':
 
-    np.random.seed(0)
     model = NN(nin=2, nouts=[8, 1])
     print(model)
 
