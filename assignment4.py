@@ -171,7 +171,6 @@ def test_training_set_sizes(sizes, model):
     # Task 5.1
     # Create a test set.
     test_X, test_y = make_circles(noise=0.1)
-    test_X, test_y = make_circles(noise=0.1)
 
     for size in sizes:
 
