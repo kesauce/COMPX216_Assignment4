@@ -206,13 +206,13 @@ if __name__ == '__main__':
     # Tasks 1, 2, & 3 test code
     training_X, training_y = make_circles(noise=0.1)
     test_X, test_y = make_circles(noise=0.1)
-    #train_and_test(model, (training_X, training_y), (test_X, test_y), 10, 1000, True)
+    train_and_test(model, (training_X, training_y), (test_X, test_y), 10, 1000, True)
 
     # Task 4 test code
     print(model_wide)
-    #train_and_test(model_wide, (training_X, training_y), (test_X, test_y), 10, 1000, True)
+    train_and_test(model_wide, (training_X, training_y), (test_X, test_y), 10, 1000, True)
     print(model_deep)
-    #train_and_test(model_deep, (training_X, training_y), (test_X, test_y), 10, 1000, True)
+    train_and_test(model_deep, (training_X, training_y), (test_X, test_y), 10, 1000, True)
 
     # Task 5 test code
     test_training_set_sizes(list(range(50, 501, 50)), model)
