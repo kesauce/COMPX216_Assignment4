@@ -158,8 +158,8 @@ def train_and_test(model, training_data, test_data, iterations, epochs, report=F
 
 # Task 4
 # Initialise a wider model and a deeper model.
-model_wide = None
-model_deep = None
+model_wide = NN(nin=2, nouts=[32, 1])
+model_deep = NN(nin=2, nouts=[8, 8, 8, 1])
 
 def test_training_set_sizes(sizes, model):
     sizes = sorted(sizes)
@@ -170,16 +170,16 @@ def test_training_set_sizes(sizes, model):
 
     # Task 5.1
     # Create a test set.
-    # Replace the line below with your code.
-    raise NotImplementedError
+    test_X, test_y = make_circles(noise=0.1)
 
     for size in sizes:
 
         # Task 5.2
         # Create a training set of the specified size.
         # Obtain the training and test losses and accuracy of the model.
-        # Replace the line below with your code.
-        raise NotImplementedError
+        training_X, training_y = make_circles(noise=0.1)
+
+        training_losses, training_accs, test_losses, test_accs = train_and_test(model, (training_X, training_y), (test_X, test_y), 10, 1000, False)
 
         recorded_training_losses.append(training_losses[-1])
         recorded_training_accs.append(training_accs[-1])
@@ -206,13 +206,13 @@ if __name__ == '__main__':
     # Tasks 1, 2, & 3 test code
     training_X, training_y = make_circles(noise=0.1)
     test_X, test_y = make_circles(noise=0.1)
-    train_and_test(model, (training_X, training_y), (test_X, test_y), 10, 1000, True)
+    #train_and_test(model, (training_X, training_y), (test_X, test_y), 10, 1000, True)
 
     # Task 4 test code
     print(model_wide)
-    train_and_test(model_wide, (training_X, training_y), (test_X, test_y), 10, 1000, True)
+    #train_and_test(model_wide, (training_X, training_y), (test_X, test_y), 10, 1000, True)
     print(model_deep)
-    train_and_test(model_deep, (training_X, training_y), (test_X, test_y), 10, 1000, True)
+    #train_and_test(model_deep, (training_X, training_y), (test_X, test_y), 10, 1000, True)
 
     # Task 5 test code
     test_training_set_sizes(list(range(50, 501, 50)), model)
